@@ -48,7 +48,7 @@ class Calculator:
 
         return (
                 (atk_char + self.attacker.atk_skill + 15)
-                * (1 + self.attacker.dmg_increase_s + mob_type_dmg / 100)
+                * (1 + (self.attacker.dmg_increase_s + mob_type_dmg) / 100)
                 * (1 + self.attacker.dmg_increase_eq / 100 * int(soft))
         )
 
@@ -111,9 +111,11 @@ class Calculator:
             not self.attacker.is_mob
             and not self.defender.is_mob
         )
-        matchup = f"""\
-        {Element(self.attacker.type)}>{Element(self.defender.type)}\
-        """
+
+        attacker_type = Element(self.attacker.type).name
+        defender_type = Element(self.defender.type).name
+        matchup = f"{attacker_type}>{defender_type}"
+
         res = (
                 self.defender.res
                 - self.attacker.res_reduction
